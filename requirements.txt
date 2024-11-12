@@ -1,0 +1,6 @@
+Flask
+selenium
+webdriver-manager
+beautifulsoup4
+pandas
+python-dotenv

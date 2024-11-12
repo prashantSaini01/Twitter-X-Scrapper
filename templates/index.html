@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X (Twitter) Hashtag Scraper</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">X (Twitter) Hashtag Scraper</h1>
+        <p class="text-center">Track the Trends: Uncover Top Posts with Just a Hashtag.</p>
+        
+        <form action="/" method="post" class="form-container shadow-sm p-4 rounded">
+            <div class="mb-3">
+                <label for="query" class="form-label">Enter your query (without '#')</label>
+                <input type="text" class="form-control" id="query" name="query" required>
+            </div>
+            <div class="mb-3">
+                <label for="desired_posts" class="form-label">Number of posts to scrape</label>
+                <input type="number" class="form-control" id="desired_posts" name="desired_posts" min="1" max="100" value="50" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Start Scraping</button>
+        </form>
+
+        {% if posts_data %}
+        <div class="mt-5">
+            <h3 class="text-center">Scraped Posts</h3>
+            <table class="table table-hover mt-4">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Profile URL</th>
+                        <th>Image URL</th>
+                        <th>Post Text</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for post in posts_data %}
+                    <tr>
+                        <td><a href="{{ post.profile_url }}" target="_blank">{{ post.profile_url }}</a></td>
+                        <td>{% if post.image_url %}<img src="{{ post.image_url }}" class="img-thumbnail" width="100">{% else %}N/A{% endif %}</td>
+                        <td>{{ post.post_text }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
